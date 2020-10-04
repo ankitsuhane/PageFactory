@@ -18,6 +18,10 @@ public class HomePageAction extends BaseWebAction {
     @Autowired
     HomePage homePage;
 
+    @Lazy
+    @Autowired
+    ContinueToLoginAction continueToLoginAction;
+
     @Value("${webui}")
     private String webUI;
 
@@ -25,5 +29,6 @@ public class HomePageAction extends BaseWebAction {
          webDriverFactory.getWebDriver().get(webUI);
          PageFactory.initElements(webDriverFactory.getWebDriver(), homePage);
          homePage.login.click();
+         continueToLoginAction.clickLoginButton();
     }
 }

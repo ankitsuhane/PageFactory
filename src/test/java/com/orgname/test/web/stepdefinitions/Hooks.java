@@ -1,4 +1,4 @@
-package com.orgname.test.stepdefinitions;
+package com.orgname.test.web.stepdefinitions;
 
 import com.orgname.framework.web.WebDriverFactory;
 import cucumber.api.Scenario;
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class Hooks {
 
-        private static final Logger logger = LoggerFactory.getLogger(com.orgname.test.stepdefinitions.Hooks.class);
+        private static final Logger logger = LoggerFactory.getLogger(com.orgname.test.web.stepdefinitions.Hooks.class);
 
         @Autowired
         WebDriverFactory webDriverFactory;

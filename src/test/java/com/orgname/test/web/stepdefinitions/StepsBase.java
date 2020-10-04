@@ -1,4 +1,4 @@
-package com.orgname.test.stepdefinitions;
+package com.orgname.test.web.stepdefinitions;
 
 import com.orgname.test.AppConfig;
 import org.springframework.test.context.ContextConfiguration;
