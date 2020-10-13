@@ -2,9 +2,11 @@ package com.orgname.framework.web;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,12 +14,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+
 @Component
 @Scope("cucumber-glue")
 public class WebDriverFactory {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebDriverFactory.class);
-    private WebDriver webDriver;
+    public static final Logger logger = LoggerFactory.getLogger(WebDriverFactory.class);
+    private static WebDriver webDriver;
 
     @Value("${browser}")
     private String browser;
@@ -29,7 +33,7 @@ public class WebDriverFactory {
     private String chromeDriver;
 
     @Value("${webdriver.wait.secs}")
-    private int webDriverWait;
+    public static int webDriverWait;
 
     @Bean
     @Scope("cucumber-glue")
@@ -59,4 +63,25 @@ public class WebDriverFactory {
     }
 
     public final WebDriver getWebDriver() {	return webDriver; }
+
+    public boolean waitForPageTitle(String pageTitle) {
+        return new WebDriverWait(getWebDriver(), webDriverWait)
+                .until(titleIs(pageTitle));
+    }
+
+    public void waitForVisibilityOfElement(WebElement elementIdentifier) {
+        new WebDriverWait(getWebDriver(), webDriverWait)
+                .until(visibilityOf(elementIdentifier));
+    }
+
+    public void waitForVisibilityOfElementClick(WebElement elementIdentifier) {
+        new WebDriverWait(getWebDriver(), webDriverWait)
+                .until(visibilityOf(elementIdentifier));
+        elementIdentifier.click();
+    }
+
+    public void waitForElementToBeClickable(WebElement elementIdentifier) {
+        new WebDriverWait(getWebDriver(), webDriverWait)
+                .until(elementToBeClickable(elementIdentifier));
+    }
 }

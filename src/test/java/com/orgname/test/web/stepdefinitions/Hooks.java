@@ -10,18 +10,23 @@ import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 public class Hooks {
 
-        private static final Logger logger = LoggerFactory.getLogger(com.orgname.test.web.stepdefinitions.Hooks.class);
+        private static final Logger logger = LoggerFactory.getLogger(Hooks.class);
 
         @Autowired
         WebDriverFactory webDriverFactory;
+
+        @Value("${webui}")
+        private String webUI;
 
         @Before
         public void setup(){
             logger.info("Setting up Web Driver!");
             webDriverFactory.setUpWebDriver();
+            webDriverFactory.getWebDriver().get(webUI);
         }
 
         @After
